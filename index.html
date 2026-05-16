@@ -361,20 +361,32 @@
       z-index: 2;
       text-align: center;
       color: #fff;
-      background: rgba(15, 23, 42, 0.4);
+      background: linear-gradient(to top, rgba(15, 23, 42, 0.8), transparent 70%);
       padding: 40px;
       width: 100%;
       height: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      backdrop-filter: blur(2px);
+      justify-content: flex-end;
+      backdrop-filter: blur(0px);
+      transition: var(--transition);
+    }
+
+    .exp-content p {
+      opacity: 0;
+      transform: translateY(20px);
       transition: var(--transition);
     }
 
     .exp-box:hover .exp-content {
-      background: rgba(15, 23, 42, 0.2);
-      backdrop-filter: blur(0);
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(4px);
+      justify-content: center;
+    }
+
+    .exp-box:hover .exp-content p {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* --- Virtual Tour Section --- */
@@ -758,12 +770,22 @@
       }
 
       .exp-box {
-        height: 350px;
+        height: 450px;
       }
 
-      .rooms-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 25px;
+      .exp-content {
+        padding: 30px;
+      }
+
+      .exp-box.active .exp-content {
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(5px);
+        justify-content: center;
+      }
+
+      .exp-box.active .exp-content p {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       .video-grid {
@@ -1233,6 +1255,23 @@
       link.addEventListener('click', () => {
         menuToggle.classList.remove('active');
         navList.classList.remove('active');
+      });
+    });
+
+    // Experience Box Mobile Interaction
+    document.querySelectorAll('.exp-box').forEach(box => {
+      box.addEventListener('click', function() {
+        if (window.innerWidth <= 768) {
+          // Toggle active class on current box
+          const isActive = this.classList.contains('active');
+          
+          // Remove active from all other boxes
+          document.querySelectorAll('.exp-box').forEach(b => b.classList.remove('active'));
+          
+          if (!isActive) {
+            this.classList.add('active');
+          }
+        }
       });
     });
   </script>
