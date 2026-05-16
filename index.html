@@ -126,6 +126,34 @@
       color: var(--accent);
     }
 
+    /* --- Mobile Navigation --- */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .menu-toggle span {
+      width: 30px;
+      height: 2px;
+      background: var(--text-light);
+      transition: var(--transition);
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
     /* --- Hero Section --- */
     .hero {
       position: relative;
@@ -577,6 +605,10 @@
         padding: 20px 40px;
       }
 
+      nav.scrolled {
+        padding: 12px 40px;
+      }
+
       .dining {
         grid-template-columns: 1fr;
       }
@@ -584,15 +616,60 @@
       .dining-img {
         min-height: 400px;
       }
+
+      .dining-text {
+        padding: 60px 40px;
+      }
     }
 
     @media (max-width: 768px) {
+      header {
+        height: auto;
+        min-height: 100vh;
+      }
+
+      nav {
+        padding: 15px 25px;
+      }
+
+      nav.scrolled {
+        padding: 10px 25px;
+      }
+
+      .logo {
+        font-size: 18px;
+        letter-spacing: 2px;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
       nav ul {
-        display: none;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        height: 100vh;
+        background: var(--primary);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: var(--transition);
+        z-index: 1000;
+        gap: 30px;
+      }
+
+      nav ul.active {
+        right: 0;
       }
 
       section {
-        padding: 80px 5%;
+        padding: 60px 20px;
+      }
+
+      .section-title {
+        margin-bottom: 40px;
       }
 
       .experience {
@@ -601,7 +678,56 @@
       }
 
       .exp-box {
+        height: 350px;
+      }
+
+      .rooms-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+      }
+
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .video-card {
         height: 400px;
+      }
+
+      .dining-text h2 {
+        font-size: 32px;
+      }
+
+      .modal-content {
+        padding: 40px 20px;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .contact form {
+        padding: 30px 20px;
+      }
+
+      .contact form div {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        font-size: 14px;
+      }
+
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .btn {
+        padding: 15px 30px;
+        font-size: 12px;
       }
     }
   </style>
@@ -616,8 +742,13 @@
     </div>
 
     <nav id="navbar">
-      <div class="logo">SUKOON <span>RESORT HOTEL & RESTAURANT</span></div>
-      <ul>
+      <div class="logo">SUKOON <span>RESORT</span></div>
+      <div class="menu-toggle" id="mobile-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul id="nav-list">
         <li><a href="#home">Home</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#rooms">Suites</a></li>
@@ -1007,6 +1138,23 @@
       dots.forEach(d => d.classList.remove('active'));
       dot.classList.add('active');
     }
+
+    // Mobile Menu Logic
+    const menuToggle = document.getElementById('mobile-menu');
+    const navList = document.getElementById('nav-list');
+
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      navList.classList.toggle('active');
+    });
+
+    // Close menu when link is clicked
+    document.querySelectorAll('#nav-list li a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        navList.classList.remove('active');
+      });
+    });
   </script>
 
 </body>
