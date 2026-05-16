@@ -1190,13 +1190,13 @@
       <h2>Contact Us</h2>
     </div>
 
-    <form style="max-width: 800px; margin: auto; background: #f8fafc; padding: 50px; border-radius: 5px;">
+    <form id="contactForm" style="max-width: 800px; margin: auto; background: #f8fafc; padding: 50px; border-radius: 5px;">
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
-        <input type="text" placeholder="Full Name" style="padding: 15px; border: 1px solid #e2e8f0; border-radius: 0;">
-        <input type="email" placeholder="Email Address"
+        <input type="text" id="contactName" placeholder="Full Name" required style="padding: 15px; border: 1px solid #e2e8f0; border-radius: 0;">
+        <input type="email" id="contactEmail" placeholder="Email Address" required
           style="padding: 15px; border: 1px solid #e2e8f0; border-radius: 0;">
       </div>
-      <textarea rows="6" placeholder="How can we help you?"
+      <textarea id="contactMessage" rows="6" placeholder="How can we help you?" required
         style="width: 100%; padding: 15px; border: 1px solid #e2e8f0; border-radius: 0; margin-bottom: 20px;"></textarea>
       <button type="submit" class="btn" style="border: none; cursor: pointer; width: 100%;">Send Message</button>
     </form>
@@ -1273,6 +1273,26 @@
           }
         }
       });
+    });
+
+    // Contact Form WhatsApp Integration
+    const contactForm = document.getElementById('contactForm');
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('contactName').value;
+      const email = document.getElementById('contactEmail').value;
+      const message = document.getElementById('contactMessage').value;
+      
+      const whatsappNumber = "923419004030";
+      const text = `*New Contact Inquiry - Sukoon Resort*%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A*Message:* ${message}`;
+      
+      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${text}`;
+      
+      window.open(whatsappUrl, '_blank');
+      
+      // Optional: Reset form
+      contactForm.reset();
     });
   </script>
 
